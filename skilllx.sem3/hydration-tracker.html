@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hydration Tracker</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 5px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .result {
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Hydration Tracker</h1>
+    <form id="hydrationForm">
+      <label for="weight">Weight (in kilograms):</label>
+      <input type="number" id="weight" placeholder="Enter your weight" required>
+
+      <label for="activity">Activity Duration (in minutes):</label>
+      <input type="number" id="activity" placeholder="Enter daily activity duration" required>
+
+      <button type="button" onclick="calculateWaterIntake()">Calculate Water Intake</button>
+    </form>
+
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    function calculateWaterIntake() {
+      // Get user input
+      const weight = parseFloat(document.getElementById('weight').value);
+      const activity = parseFloat(document.getElementById('activity').value);
+
+      // Validate input
+      if (!weight || weight <= 0 || !activity || activity < 0) {
+        document.getElementById('result').innerHTML = "<p style='color: red;'>Please enter valid inputs!</p>";
+        return;
+      }
+
+      // Calculate daily water intake
+      // Base water intake is 35 ml per kg of body weight
+      let waterIntake = weight * 35; // in milliliters
+      // Add an additional 12 ml per minute of activity
+      waterIntake += activity * 12;
+
+      // Convert to liters
+      const waterIntakeLiters = (waterIntake / 1000).toFixed(2);
+
+      // Display result
+      document.getElementById('result').innerHTML = `
+        <h2>Your Daily Water Intake:</h2>
+        <p>${waterIntakeLiters} liters</p>
+        <p>Drink water throughout the day to stay hydrated!</p>
+      `;
+    }
+  </script>
+</body>
+</html>
